@@ -8,7 +8,7 @@
 #Dashboard 
 ![image alt](https://github.com/muskan2862/taskmatrix-final/blob/0579cdddb8e2f79a878051a4209c702a20a69c78/Screenshot%202026-07-27%20112403.png)
 ![image alt](https://github.com/muskan2862/taskmatrix-final/blob/b7d6e50a573c9194b3977265e2a5979d7233f67c/Screenshot%202026-07-27%20112423.png)
-![image alt]()
+![image alt](https://github.com/muskan2862/taskmatrix-final/blob/85abcef03819eb42458004b7219997a4adae47a1/Screenshot%202026-07-27%20112434.png)
 
 #Projects Page
 ![image alt]()
