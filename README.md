@@ -14,7 +14,7 @@
 ![image alt](https://github.com/muskan2862/taskmatrix-final/blob/cc2c4b317b9ad99cca6d0b67d3acad99e35be1d2/Screenshot%202026-07-27%20112451.png)
 
 #Tasks Page
-![image alt]()
+![image alt](https://github.com/muskan2862/taskmatrix-final/blob/b904a595f1e8db25d457d4b49e640e2fed6a8680/Screenshot%202026-07-27%20112508.png)
 
 #Charts
 ![image alt]()
