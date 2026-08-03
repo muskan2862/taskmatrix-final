@@ -7,9 +7,13 @@ import {
   LayoutDashboard,
   FolderKanban,
   ListTodo,
+  X,
 } from "lucide-react";
 
-export default function Sidebar() {
+export default function Sidebar({
+  sidebarOpen = false,
+  setSidebarOpen = () => {},
+}) {
   const pathname = usePathname();
 
   const links = [
@@ -31,35 +35,85 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 min-h-screen bg-slate-900 text-white p-6 shrink-0">
+    <>
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-      <h1 className="text-3xl font-bold mb-10">
-        TaskMatrix
-      </h1>
+      {/* Mobile Sidebar */}
+      <aside
+        className={`fixed top-0 left-0 z-50 h-screen w-64 bg-slate-900 text-white p-6 transform transition-transform duration-300 lg:hidden ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex items-center justify-between mb-10">
+          <h1 className="text-3xl font-bold">
+            TaskMatrix
+          </h1>
 
-      <nav className="space-y-2">
+          <button
+            onClick={() => setSidebarOpen(false)}
+          >
+            <X size={24} />
+          </button>
+        </div>
 
-        {links.map((link) => {
-          const Icon = link.icon;
+        <nav className="space-y-2">
+          {links.map((link) => {
+            const Icon = link.icon;
 
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`flex items-center gap-3 p-3 rounded-lg transition ${
-                pathname === link.href
-                  ? "bg-blue-600"
-                  : "hover:bg-slate-800"
-              }`}
-            >
-              <Icon size={20} />
-              <span>{link.name}</span>
-            </Link>
-          );
-        })}
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setSidebarOpen(false)}
+                className={`flex items-center gap-3 rounded-lg p-3 transition ${
+                  pathname === link.href
+                    ? "bg-blue-600"
+                    : "hover:bg-slate-800"
+                }`}
+              >
+                <Icon size={20} />
+                <span>{link.name}</span>
+              </Link>
+            );
+          })}
+        </nav>
+      </aside>
 
-      </nav>
+      {/* Desktop Sidebar */}
+      <aside className="hidden lg:flex lg:w-64 lg:min-h-screen lg:flex-col bg-slate-900 text-white p-6">
 
-    </aside>
+        <h1 className="text-3xl font-bold mb-10">
+          TaskMatrix
+        </h1>
+
+        <nav className="space-y-2">
+          {links.map((link) => {
+            const Icon = link.icon;
+
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`flex items-center gap-3 rounded-lg p-3 transition ${
+                  pathname === link.href
+                    ? "bg-blue-600"
+                    : "hover:bg-slate-800"
+                }`}
+              >
+                <Icon size={20} />
+                <span>{link.name}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+      </aside>
+    </>
   );
 }

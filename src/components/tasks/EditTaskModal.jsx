@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Pencil } from "lucide-react";
 
 import { updateTask } from "@/services/taskService";
-
+import { toast } from "sonner";
 import {
   Dialog,
   DialogTrigger,
@@ -54,7 +54,7 @@ export default function EditTaskModal({
     setLoading(false);
 
     if (error) {
-      alert(error.message);
+      toast.error(error.message);
       return;
     }
 
@@ -62,7 +62,7 @@ export default function EditTaskModal({
 
     onTaskUpdated?.();
 
-    alert("Task updated successfully!");
+    toast.success("Task updated successfully!");
   }
 
   return (

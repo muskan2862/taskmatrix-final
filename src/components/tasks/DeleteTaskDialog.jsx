@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Trash2 } from "lucide-react";
 
 import { deleteTask } from "@/services/taskService";
+import { toast } from "sonner";
 
 import {
   Dialog,
@@ -31,7 +32,7 @@ export default function DeleteTaskDialog({
     setLoading(false);
 
     if (error) {
-      alert(error.message);
+      toast.error(error.message);
       return;
     }
 
@@ -41,7 +42,7 @@ export default function DeleteTaskDialog({
       onTaskDeleted();
     }
 
-    alert("Task deleted successfully!");
+    toast.success("Task deleted successfully!");
   }
 
   return (

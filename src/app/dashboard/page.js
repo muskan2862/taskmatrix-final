@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import Sidebar from "@/components/layout/Sidebar";
 import Navbar from "@/components/layout/Navbar";
@@ -13,36 +15,39 @@ import HighPriorityTasks from "@/components/dashboard/HighPriorityTasks";
 import ProjectProgress from "@/components/dashboard/ProjectProgress";
 import TaskStatusChart from "@/components/dashboard/TaskStatusChart";
 import TaskPriorityChart from "@/components/dashboard/TaskPriorityChart";
-
-import useTasks from "@/hooks/useTasks";
-import { useState } from "react";
 import SearchBar from "@/components/dashboard/SearchBar";
 
+import useTasks from "@/hooks/useTasks";
 
 export default function DashboardPage() {
-
   const { tasks } = useTasks();
+
   const [search, setSearch] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <ProtectedRoute>
       <div className="flex min-h-screen bg-gray-100">
 
-        <Sidebar />
+        <Sidebar
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+        />
 
-        <div className="flex-1 flex flex-col">
+        <div className="flex flex-1 flex-col">
 
-          <Navbar />
+          <Navbar
+            setSidebarOpen={setSidebarOpen}
+          />
 
           <main className="flex-1 p-8 space-y-8">
 
             <WelcomeBanner />
 
-
-          <SearchBar
-            search={search}
-            setSearch={setSearch}
-          />
+            <SearchBar
+              search={search}
+              setSearch={setSearch}
+            />
 
             <StatsCard />
 
@@ -52,7 +57,7 @@ export default function DashboardPage() {
 
             <ProjectProgress />
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid gap-6 md:grid-cols-2">
 
               <UpcomingTasks tasks={tasks} />
 
@@ -60,9 +65,12 @@ export default function DashboardPage() {
 
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid gap-6 lg:grid-cols-2">
+
               <TaskStatusChart />
+
               <TaskPriorityChart />
+
             </div>
 
           </main>

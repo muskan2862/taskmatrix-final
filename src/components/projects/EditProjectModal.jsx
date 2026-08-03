@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 export default function EditProjectModal({
   project,
@@ -47,7 +48,7 @@ export default function EditProjectModal({
     setLoading(false);
 
     if (error) {
-      alert(error.message);
+      toast.error(error.message);
       return;
     }
 
@@ -55,7 +56,7 @@ export default function EditProjectModal({
 
     onProjectUpdated?.();
 
-    alert("Project updated successfully!");
+    toast.success("Project updated successfully!");
   };
 
   return (

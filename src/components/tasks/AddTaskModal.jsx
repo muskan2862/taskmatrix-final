@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
 import { createTask } from "@/services/taskService";
 import { getProjects } from "@/services/projectService";
+import { Sparkles } from "lucide-react";
+import { generateTaskDescription } from "@/services/geminiService";
 
 import {
   Dialog,
@@ -34,7 +36,7 @@ export default function AddTaskModal({ onTaskAdded }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState([]);
-
+  const [aiLoading, setAiLoading] = useState(false);
   const [formData, setFormData] = useState({
     project_id: "",
     title: "",
@@ -64,6 +66,31 @@ export default function AddTaskModal({ onTaskAdded }) {
       [e.target.name]: e.target.value,
     });
   }
+
+  async function handleGenerateDescription() {
+    if (!formData.title.trim()) {
+      toast.error("Please enter a task title first.");
+      return;
+    }
+
+    try {
+     setAiLoading(true);
+
+     const description = await generateTaskDescription(formData.title);
+
+     setFormData((prev) => ({
+      ...prev,
+      description,
+    }));
+
+    toast.success("Description generated successfully!");
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to generate description.");
+  } finally {
+    setAiLoading(false);
+  }
+}
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -103,11 +130,13 @@ export default function AddTaskModal({ onTaskAdded }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
-        <Button>
+      <DialogTrigger
+       render={
+         <Button>
           + Add Task
-        </Button>
-      </DialogTrigger>
+         </Button>
+       }
+      />
 
       <DialogContent>
         <DialogHeader>
@@ -155,6 +184,19 @@ export default function AddTaskModal({ onTaskAdded }) {
               placeholder="Enter Task Title"
               required
             />
+            <Button
+             type="button"
+             variant="outline"
+             className="w-full mt-3"
+             onClick={handleGenerateDescription}
+             disabled={aiLoading}
+            >
+             <Sparkles className="mr-2 h-4 w-4" />
+
+             {aiLoading
+                ? "Generating..."
+                : "✨ Generate Description with AI"}
+            </Button>
           </div>
 
           <div>

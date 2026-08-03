@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { toast } from "sonner";
 
 import { useAuth } from "@/context/AuthContext";
 import { createProject } from "@/services/projectService";
-
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,

@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import Sidebar from "@/components/layout/Sidebar";
 import Navbar from "@/components/layout/Navbar";
@@ -16,26 +18,33 @@ export default function ProjectsPage() {
     fetchProjects,
   } = useProjects();
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <ProtectedRoute>
       <main className="flex min-h-screen bg-gray-100">
 
-        <Sidebar />
+        <Sidebar
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+        />
 
-        <div className="flex-1">
+        <div className="flex-1 flex flex-col">
 
-          <Navbar />
+          <Navbar
+            setSidebarOpen={setSidebarOpen}
+          />
 
-          <section className="p-8">
+          <section className="flex-1 p-6 md:p-8">
 
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
 
               <div>
                 <h1 className="text-3xl font-bold">
                   Projects
                 </h1>
 
-                <p className="text-gray-500 mt-2">
+                <p className="mt-2 text-gray-500">
                   Manage all your projects in one place.
                 </p>
               </div>
@@ -48,19 +57,19 @@ export default function ProjectsPage() {
 
             {loading ? (
 
-              <div className="text-center py-10">
+              <div className="py-10 text-center">
                 Loading Projects...
               </div>
 
             ) : projects.length === 0 ? (
 
-              <div className="bg-white rounded-xl shadow p-10 text-center text-gray-500">
+              <div className="rounded-xl bg-white p-10 text-center shadow text-gray-500">
                 No Projects Found
               </div>
 
             ) : (
 
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
 
                 {projects.map((project) => (
                   <ProjectCard

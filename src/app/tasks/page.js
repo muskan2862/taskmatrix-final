@@ -21,6 +21,8 @@ export default function TasksPage() {
 
   const { tasks, loading, fetchTasks } = useTasks();
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   const [projects, setProjects] = useState([]);
 
   const [project, setProject] = useState("All");
@@ -65,27 +67,32 @@ export default function TasksPage() {
     <ProtectedRoute>
       <main className="flex min-h-screen bg-gray-100">
 
-        <Sidebar />
+        <Sidebar
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+        />
 
-        <div className="flex-1">
+        <div className="flex-1 flex flex-col">
 
-          <Navbar />
+          <Navbar
+            setSidebarOpen={setSidebarOpen}
+          />
 
-          <section className="p-8">
+          <section className="flex-1 p-6 md:p-8">
 
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
 
               <div>
                 <h1 className="text-3xl font-bold">
                   Task Management
                 </h1>
 
-                <p className="text-gray-500 mt-2">
+                <p className="mt-2 text-gray-500">
                   Manage all your tasks here.
                 </p>
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
 
                 <ExportCSV
                   tasks={filteredTasks}

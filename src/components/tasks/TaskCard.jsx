@@ -13,41 +13,43 @@ export default function TaskCard({
   onRefresh,
 }) {
   return (
-    <Card className="shadow-md hover:shadow-lg transition">
+    <Card className="shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
 
       <CardContent className="p-5">
 
-        <div className="flex justify-between items-start">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-5">
 
-          <div className="space-y-2">
+          {/* Left Side */}
+          <div className="flex-1 space-y-3">
 
-            <h3 className="text-lg font-semibold">
+            <h3 className="text-xl font-semibold wrap-break-word">
               {task.title}
             </h3>
 
-            <p className="text-gray-600">
-              {task.description}
+            <p className="text-gray-600 wrap-break-word">
+              {task.description || "No description provided."}
             </p>
 
-            <div className="flex gap-3 flex-wrap">
+            <div className="flex flex-wrap gap-2">
 
-              <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm">
+              <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
                 {task.status}
               </span>
 
-              <span className="px-3 py-1 rounded-full bg-red-100 text-red-700 text-sm">
+              <span className="rounded-full bg-red-100 px-3 py-1 text-sm font-medium text-red-700">
                 {task.priority}
               </span>
 
-              <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm">
-                📅 {task.due_date}
+              <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-700">
+                📅 {task.due_date || "No Due Date"}
               </span>
 
             </div>
 
           </div>
 
-          <div className="flex gap-2">
+          {/* Right Side */}
+          <div className="flex flex-wrap gap-2 lg:flex-col">
 
             <EditTaskModal
               task={task}
